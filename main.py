@@ -12,7 +12,7 @@ import models
 from database import engine, SessionLocal
 from models import Product, Category
 #import easyocr
-#import re
+import re
 from models import Order
 from datetime import timedelta
 from starlette.middleware.sessions import SessionMiddleware
