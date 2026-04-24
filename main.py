@@ -52,18 +52,18 @@ def get_db():
         db.close()
 
 
-@app.get("/", response_class=HTMLResponse)
-def home(request: Request):
-return templates.TemplateResponse(
-    request=request,
-    name="index.html",
-    context={
-        "message": "Hello World",
-        "score": 76,
-        "activities": ["Running", "Go", "Football"]
-    }
-)
-
+@app.get("/")
+def home(request: Request): # บรรทัดที่ 56
+    # บรรทัดด้านล่างนี้ต้องย่อหน้าเข้ามา (ใช้ 4 spaces หรือ 1 Tab)
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "message": "Hello World",
+            "score": 76,
+            "activities": ["Running", "Go", "Football"]
+        }
+    )
 # --- แสดงรายการสินค้า (Read) ---
 @app.get("/products", response_class=HTMLResponse)
 def product_list(request: Request, db: Session = Depends(get_db)):
