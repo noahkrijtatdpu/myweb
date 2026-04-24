@@ -52,10 +52,9 @@ def get_db():
         db.close()
 
 
-
-@app.get("/")
-async def home(request: Request):
-
+@app.get("/")  # หรือเส้นทาง (Path) อื่นที่คุณต้องการ
+async def home(request: Request): # ต้องมีบรรทัดนี้อยู่ข้างบน
+    # บรรทัด return ต้องมีย่อหน้าเข้าไป (กด Space 4 ครั้ง หรือกด Tab 1 ครั้ง)
     return templates.TemplateResponse(
         request=request,
         name="index.html",
@@ -348,24 +347,27 @@ def get_current_user(request: Request):
         return RedirectResponse("/login", status_code=303)
     return user
 
+# --- ส่วนที่ต้องแก้ไข (อยู่ท้ายไฟล์) ---
+
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request, user=Depends(get_current_user)):
-    if isinstance(user, RedirectResponse):
-        return user
+    # ถ้าไม่มี user ให้ Redirect ไปหน้า login (get_current_user ต้องส่งค่ากลับมาเช็ค)
+    if not user:
+        return RedirectResponse("/login", status_code=303)
 
+    # บรรทัดนี้ต้อง "ย่อหน้า" เข้ามาให้ตรงกับ if ด้านบน
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "message": "Hello World",
+            "score": 76,
+            "activities": ["Running", "Go", "Football"]
+        }
+    )
 
-return templates.TemplateResponse(
-    request=request,
-    name="index.html",
-    context={
-        # ไม่ต้องใส่ "request": request, ในนี้แล้ว
-        "message": "Hello World",
-        "score": 76,
-        "activities": ["Running", "Go", "Football"]
-    }
-)
 @app.post("/api/login")
-def api_login(username: str, password: str):
+def api_login(username: str = Form(...), password: str = Form(...)): # เพิ่ม Form(...) เพื่อให้รับค่าจากหน้าบ้านได้
     if username == "admin" and password == "1234":
         token = create_token(username)
         return {
@@ -376,7 +378,6 @@ def api_login(username: str, password: str):
         status_code=401,
         detail="Invalid username or password"
     )
-
 
 @app.get("/api/v1/users")
 def user_list(user = Depends(verify_token)):
