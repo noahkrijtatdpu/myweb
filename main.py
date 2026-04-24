@@ -52,9 +52,10 @@ def get_db():
         db.close()
 
 
-@app.get("/")  # หรือเส้นทาง (Path) อื่นที่คุณต้องการ
-async def home(request: Request): # ต้องมีบรรทัดนี้อยู่ข้างบน
-    # บรรทัด return ต้องมีย่อหน้าเข้าไป (กด Space 4 ครั้ง หรือกด Tab 1 ครั้ง)
+
+@app.get("/")
+async def home(request: Request):
+
     return templates.TemplateResponse(
         request=request,
         name="index.html",
