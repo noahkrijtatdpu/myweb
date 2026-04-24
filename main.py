@@ -52,10 +52,9 @@ def get_db():
         db.close()
 
 
-# ต้องมีบรรทัด def นำหน้าเสมอ
-@app.get("/")
-async def home(request: Request):
-    # บรรทัด return ต้องมีย่อหน้าเข้าไป (4 spaces หรือ 1 Tab)
+@app.get("/")  # หรือเส้นทาง (Path) อื่นที่คุณต้องการ
+async def home(request: Request): # ต้องมีบรรทัดนี้อยู่ข้างบน
+    # บรรทัด return ต้องมีย่อหน้าเข้าไป (กด Space 4 ครั้ง หรือกด Tab 1 ครั้ง)
     return templates.TemplateResponse(
         request=request,
         name="index.html",
@@ -65,6 +64,7 @@ async def home(request: Request):
             "activities": ["Running", "Go", "Football"]
         }
     )
+
 # --- แสดงรายการสินค้า (Read) ---
 @app.get("/products", response_class=HTMLResponse)
 def product_list(request: Request, db: Session = Depends(get_db)):
@@ -222,7 +222,6 @@ def process_ocr(image_path):
         "amount": amount,
         "datetime": date_match,
     }
-
 def parse_thai_datetime(text):
     thai_months = {
         "ม.ค.": 1, "ก.พ.": 2, "มี.ค.": 3,
