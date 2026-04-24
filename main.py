@@ -352,15 +352,16 @@ def home(request: Request, user=Depends(get_current_user)):
         return user
 
 
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "message": "Welcome to My Web App",
-        "username": user,
-        "email": "somchai@mail.com",
-        "score": 95,
+return templates.TemplateResponse(
+    request=request,
+    name="index.html",
+    context={
+        # ไม่ต้องใส่ "request": request, ในนี้แล้ว
+        "message": "Hello World",
+        "score": 76,
         "activities": ["Running", "Go", "Football"]
-    })
-
+    }
+)
 @app.post("/api/login")
 def api_login(username: str, password: str):
     if username == "admin" and password == "1234":
