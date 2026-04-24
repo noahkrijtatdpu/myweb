@@ -52,9 +52,10 @@ def get_db():
         db.close()
 
 
+# ต้องมีบรรทัด def นำหน้าเสมอ
 @app.get("/")
-def home(request: Request): # บรรทัดที่ 56
-    # บรรทัดด้านล่างนี้ต้องย่อหน้าเข้ามา (ใช้ 4 spaces หรือ 1 Tab)
+async def home(request: Request):
+    # บรรทัด return ต้องมีย่อหน้าเข้าไป (4 spaces หรือ 1 Tab)
     return templates.TemplateResponse(
         request=request,
         name="index.html",
