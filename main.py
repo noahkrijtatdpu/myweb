@@ -12,7 +12,7 @@ import models
 from database import engine, SessionLocal
 from models import Product, Category
 #import easyocr
-import re
+#import re
 from models import Order
 from datetime import timedelta
 from starlette.middleware.sessions import SessionMiddleware
@@ -54,14 +54,15 @@ def get_db():
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "message": "Welcome to My Web App",
-        "username": "Somchai",
-        "email": "somchai@mail.com",
-        "score": 95,
+return templates.TemplateResponse(
+    request=request,
+    name="index.html",
+    context={
+        "message": "Hello World",
+        "score": 76,
         "activities": ["Running", "Go", "Football"]
-    })
+    }
+)
 
 # --- แสดงรายการสินค้า (Read) ---
 @app.get("/products", response_class=HTMLResponse)
