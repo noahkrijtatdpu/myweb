@@ -11,7 +11,7 @@ from fastapi.responses import HTMLResponse
 import models
 from database import engine, SessionLocal
 from models import Product, Category
-import easyocr
+#import easyocr
 import re
 from models import Order
 from datetime import timedelta
@@ -184,7 +184,7 @@ def product_search_api(search: str = ""):
 
 
 
-reader = easyocr.Reader(['th', 'en'])
+#reader = easyocr.Reader(['th', 'en'])
 
 @app.get("/pvs/upload", response_class=HTMLResponse)
 def pvs_upload(request: Request):
